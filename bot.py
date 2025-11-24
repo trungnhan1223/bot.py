@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 # Bot Configuration - Đặt token Discord của bạn ở đây
-TOKEN = "MTM5Njc1MDcxODY3MjcwMzY0OQ.GR1zG0.8e_RblAs_9Jkm28BNcJcx5wu94Ghv1lkYKvg-E"  # Thay YOUR_DISCORD_BOT_TOKEN_HERE bằng token thật
+TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "."
 
 # VPS information
@@ -3480,4 +3480,5 @@ async def proxies(ctx):
         )
         await ctx.send(embed=embed)
 
-bot.run(TOKEN)
+
+client.run(TOKEN)
