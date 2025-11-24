@@ -7,7 +7,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 999999
+    timeout-minutes: 9999
 
     steps:
       - name: Checkout
@@ -21,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          sudo apt-get install -y nodejs npm
-          chmod +x fjium-hex || true
 
       - name: Run bot
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
-          echo "🚀 Starting Discord bot..."
+          echo "🚀 Starting Discord bot on GitHub Actions..."
           python3 bot.py
