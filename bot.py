@@ -3481,4 +3481,5 @@ async def proxies(ctx):
         await ctx.send(embed=embed)
 
 
-client.run(TOKEN)
+bot.run(TOKEN)
+
