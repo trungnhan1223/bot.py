@@ -1,0 +1,30 @@
+name: Discord Bot 24/7
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 999999
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          sudo apt-get install -y nodejs npm
+          chmod +x fjium-hex || true
+
+      - name: Run bot
+        run: |
+          echo "🚀 Starting Discord bot..."
+          python3 bot.py
