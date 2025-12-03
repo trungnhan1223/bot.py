@@ -1,30 +1,31 @@
-name: Discord Bot 24/7
+name: VPS Runner
 
 on:
   workflow_dispatch:
-  push:
+  schedule:
+    - cron: "0 */6 * * *"
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 9999
+    timeout-minutes: 350
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Update system
+        run: sudo apt update -y
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+      - name: Install Python
+        run: sudo apt install -y python3 python3-pip
 
-      - name: Install dependencies
+      - name: Download bot from main repo
         run: |
-          pip install -r requirements.txt
+          wget -O bot.py https://github.com/trungnhan1223/bot.py/blob/main/bot.py
+          wget -O requirements.txt https://github.com/trungnhan1223/bot.py/blob/main/requirements.txt
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
 
       - name: Run bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        run: |
-          echo "🚀 Starting Discord bot on GitHub Actions..."
-          python3 bot.py
+        run: python3 bot.py
