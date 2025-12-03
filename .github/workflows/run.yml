@@ -17,7 +17,7 @@ jobs:
       - name: Install Python
         run: sudo apt install -y python3 python3-pip
 
-      - name: Download bot from main repo
+      - name: Download bot from main repo (RAW FILES)
         run: |
           wget -O bot.py https://raw.githubusercontent.com/trungnhan1223/bot.py/main/bot.py
           wget -O requirements.txt https://raw.githubusercontent.com/trungnhan1223/bot.py/main/requirements.txt
