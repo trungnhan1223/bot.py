@@ -1,2 +1,4 @@
+requests
 discord.py
-psutil
+pillow
+colorama
