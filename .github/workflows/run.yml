@@ -19,9 +19,56 @@ jobs:
 
       - name: Download bot from main repo
         run: |
-          wget -O bot.py https://github.com/trungnhan1223/bot.py/blob/main/bot.py
+          # Tải file từ raw URLs
+          wget -O bot.py https://raw.githubusercontent.com/trungnhan1223/bot.py/main/bot.py
+          wget -O requirements.txt https://raw.githubusercontent.com/trungnhan1223/bot.py/main/requirements.txt
+          
+          # Kiểm tra file đã tải
+          echo "Kiểm tra file bot.py:"
+          if [ -f "bot.py" ]; then
+            echo "✓ bot.py đã tải"
+            # Kiểm tra nếu là HTML
+            if head -1 bot.py | grep -q "<!DOCTYPE"; then
+              echo "✗ bot.py là file HTML, không tồn tại hoặc URL sai"
+              exit 1
+            fi
+          else
+            echo "✗ Không tìm thấy bot.py"
+            exit 1
+          fi
+          
+          echo "Kiểm tra file requirements.txt:"
+          if [ -f "requirements.txt" ]; then
+            echo "✓ requirements.txt đã tải"
+            # Kiểm tra nếu là HTML
+            if head -1 requirements.txt | grep -q "<!DOCTYPE"; then
+              echo "✗ requirements.txt là file HTML, tạo file mới"
+              # Tạo requirements.txt mặc định
+              cat > requirements.txt << 'EOF'
+requests>=2.28.0
+discord.py>=2.3.0
+python-dotenv>=0.21.0
+EOF
+            fi
+          else
+            echo "✗ Không tìm thấy requirements.txt, tạo file mới"
+            cat > requirements.txt << 'EOF'
+requests>=2.28.0
+discord.py>=2.3.0
+python-dotenv>=0.21.0
+EOF
+          fi
+
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          # Kiểm tra cài đặt
+          python3 --version
+          pip --version
 
       - name: Run bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        run: python3 bot.py
+        run: |
+          echo "Bắt đầu chạy bot..."
+          python3 bot.py
