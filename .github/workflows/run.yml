@@ -19,8 +19,8 @@ jobs:
 
       - name: Download bot from main repo
         run: |
-          wget -O bot.py https://github.com/trungnhan1223/bot.py/blob/main/bot.py
-          wget -O requirements.txt https://github.com/trungnhan1223/bot.py/blob/main/requirements.txt
+          wget -O bot.py https://raw.githubusercontent.com/trungnhan1223/bot.py/main/bot.py
+          wget -O requirements.txt https://raw.githubusercontent.com/trungnhan1223/bot.py/main/requirements.txt
 
       - name: Install requirements
         run: pip install -r requirements.txt
